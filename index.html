@@ -1,0 +1,1171 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="shortcut icon" href="Peixinhos-removebg-preview.ico" type="image/x-icon">
+    <title>2 Aninhos da Ágatha 🐚</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bubblegum+Sans&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Nunito:wght@600;800;900&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <style>
+        :root {
+            /* Paleta Pastel Aquarela */
+            --bg-sky: #e1f5fe;
+            --bg-water: #b3e5fc;
+            --bg-deep: #81d4fa;
+            --bg-sand: #fef0cd;
+            
+            --card-bg: rgba(255, 255, 255, 0.7); /* Vidro um pouco mais leitoso */
+            --card-border: rgba(255, 255, 255, 0.9);
+            --text-title: #1e3a8a; 
+            --text-body: #334155; 
+            --accent-pink: #f48fb1;
+            --btn-color: #f48fb1;
+            --btn-active: #f06292;
+        }
+
+        * {
+            margin: 0; padding: 0; box-sizing: border-box;
+            -webkit-user-select: none; user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: 'Fredoka', sans-serif;
+            background: linear-gradient(180deg, var(--bg-sky) 0%, var(--bg-water) 50%, var(--bg-sand) 100%);
+            height: 100dvh; overflow: hidden;
+            display: flex; align-items: center; justify-content: center;
+        }
+
+        /* =========================================
+           🎬 TELA DE LOADING (MANTIDA)
+           ========================================= */
+        #loader {
+            position: fixed; inset: 0; z-index: 9999;
+            background: linear-gradient(180deg, var(--bg-sky) 0%, var(--bg-deep) 100%);
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            overflow: hidden; perspective: 1000px;
+            animation: hideLoader 6.5s forwards;
+        }
+
+        /* Efeito de Lente (Vinheta) para dar profundidade */
+#loader::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle, transparent 30%, rgba(0, 20, 50, 0.4) 100%);
+    pointer-events: none;
+    z-index: 5;
+}
+
+/* Flash Branco de Transição Final */
+#loader::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: white;
+    opacity: 0;
+    z-index: 20;
+    pointer-events: none;
+    animation: transitionFlash 6.5s forwards;
+}
+
+@keyframes transitionFlash {
+    0%, 92% { opacity: 0; }
+    96% { opacity: 1; } /* O flash acontece logo antes de sumir */
+    100% { opacity: 0; }
+}
+
+/* Animação da Hélice do Submarino */
+.sub-propeller {
+    transform-origin: center;
+    animation: spinPropeller 0.3s linear infinite;
+}
+
+@keyframes spinPropeller {
+    from { transform: rotateX(0deg); }
+    to { transform: rotateX(360deg); }
+}
+
+/* Ajuste no Texto para parecer flutuar na água */
+.cine-text {
+    filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.5));
+    letter-spacing: 1px;
+}
+
+        @keyframes hideLoader {
+            0%, 85% { opacity: 1; visibility: visible; transform: scale(1); }
+            100% { opacity: 0; visibility: hidden; transform: scale(1.1); }
+        }
+
+        .god-rays {
+            position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+            background: repeating-conic-gradient(from 0deg, rgba(255, 255, 255, 0.3) 0deg 15deg, transparent 15deg 30deg);
+            animation: rotateRays 40s linear infinite;
+            -webkit-mask-image: radial-gradient(circle at center, black 10%, transparent 60%);
+            mask-image: radial-gradient(circle at center, black 10%, transparent 60%);
+            pointer-events: none; z-index: 1;
+        }
+        @keyframes rotateRays { 100% { transform: rotate(360deg); } }
+
+        .cine-text {
+            position: absolute; top: 18%;
+            color: var(--text-title); font-family: 'Nunito', sans-serif;
+            font-size: 2rem; font-weight: 900; text-align: center;
+            text-shadow: 0 4px 15px rgba(255, 255, 255, 0.9); opacity: 0; z-index: 10;
+        }
+
+        .text-1 { animation: textSequence1 6s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
+        .text-2 { animation: textSequence2 6s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
+
+        @keyframes textSequence1 { 0% { opacity: 0; transform: translate3d(0, 20px, 0) scale(0.95); } 10%, 25% { opacity: 1; transform: translate3d(0, 0, 0) scale(1); } 35%, 100% { opacity: 0; transform: translate3d(0, -20px, 0) scale(1.05); } }
+        @keyframes textSequence2 { 0%, 55% { opacity: 0; transform: translate3d(0, 20px, 0) scale(0.95); } 65%, 80% { opacity: 1; transform: translate3d(0, 0, 0) scale(1); } 90%, 100% { opacity: 0; transform: translate3d(0, -20px, 0) scale(1.05); } }
+
+        .sub-trajectory {
+            position: absolute; z-index: 10;
+            transform: translate3d(0, -60dvh, 0) scale(0.8); 
+            animation: subJourney 6.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+        }
+
+        .sub-floater { animation: heroFloat 3s ease-in-out infinite alternate; }
+        .sub-floater svg { width: 160px; height: auto; filter: drop-shadow(0 15px 25px rgba(2, 132, 199, 0.3)); }
+
+        @keyframes subJourney { 0%, 15% { transform: translate3d(0, -60dvh, 0) scale(0.8) rotate(15deg); } 35%, 70% { transform: translate3d(0, 0, 0) scale(1) rotate(-2deg); } 85% { transform: translate3d(0, 5dvh, 0) scale(6) rotate(-10deg); opacity: 1; } 100% { transform: translate3d(0, 10dvh, 0) scale(12) rotate(-15deg); opacity: 0; } }
+        @keyframes heroFloat { 0% { transform: translate3d(0, -8px, 0); } 100% { transform: translate3d(0, 8px, 0); } }
+
+        .speed-lines { position: absolute; inset: 0; z-index: 2; opacity: 0; animation: speedLinesFade 6.5s ease-in-out forwards; }
+        .speed-line { position: absolute; bottom: -20vh; width: 4px; height: 50px; background: rgba(255, 255, 255, 0.8); border-radius: 10px; animation: rushUp linear infinite; }
+        @keyframes speedLinesFade { 0%, 15% { opacity: 0; } 25%, 35% { opacity: 1; } 45%, 100% { opacity: 0; } }
+        @keyframes rushUp { 0% { transform: translate3d(0, 120dvh, 0); opacity: 0; } 10%, 90% { opacity: 1; } 100% { transform: translate3d(0, -20dvh, 0); opacity: 0; } }
+
+        /* =========================================
+           🐟 FUNDO DO MAR
+           ========================================= */
+        .bubbles-container, .fish-container { position: absolute; width: 100%; height: 100%; pointer-events: none; z-index: 1; }
+        .bubble { position: absolute; bottom: -40px; background: rgba(255, 255, 255, 0.4); border: 2px solid rgba(255, 255, 255, 0.8); border-radius: 50%; animation: rise linear forwards; }
+        @keyframes rise { 0% { transform: translate3d(0, 0, 0) scale(1); opacity: 0; } 10% { opacity: 1; } 90% { opacity: 0.8; } 100% { transform: translate3d(0, -110dvh, 0) scale(1.3); opacity: 0; } }
+
+        .fish-wrapper { position: absolute; animation: swimAcrossLeftToRight linear forwards; }
+        svg.fish { width: varied; height: auto; pointer-events: none; }
+        .fish-wriggle { animation: wriggle 0.5s ease-in-out infinite alternate; }
+        @keyframes wriggle { 0% { transform: translate3d(0, -3px, 0) rotate(-2deg); } 100% { transform: translate3d(0, 3px, 0) rotate(2deg); } }
+        @keyframes swimAcrossLeftToRight { 0% { transform: translate3d(-120vw, 0, 0); opacity: 0; } 10%, 90% { opacity: 0.8; } 100% { transform: translate3d(120vw, 0, 0); opacity: 0; } }
+
+        /* =========================================
+           💌 CARDS TOTALMENTE REFEITOS
+           ========================================= */
+        .card-wrapper {
+            position: relative; z-index: 10;
+            width: 88%; max-width: 380px; 
+            /* Altura automática para abraçar o conteúdo sem deixar sobras */
+            height: auto; 
+            min-height: 600px; /* Reduzido o buraco em branco */
+            transform: scale(0.85); opacity: 0;
+            animation: revealCards 1s cubic-bezier(0.2, 0.8, 0.2, 1) 5.8s forwards;
+        }
+
+        @keyframes revealCards { to { transform: scale(1); opacity: 1; } }
+
+        .card {
+            position: absolute; inset: 0;
+            background: linear-gradient(135deg, var(--card-bg) 0%, rgba(255, 255, 255, 0.4) 100%);
+            backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px);
+            border-radius: 36px; 
+            padding: 40px 24px;
+            display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;
+            /* Layout Inteligente: Gap distribui o espaço sem precisar de margens enormes */
+            gap: 15px;
+            
+            /* Reflexo de água no card */
+            box-shadow: 
+                0 20px 40px rgba(2, 132, 199, 0.15), 
+                inset 0 -30px 40px rgba(129, 212, 250, 0.25), /* Brilho de água embaixo */
+                inset 0 2px 0 0 rgba(255, 255, 255, 1);
+            border: 2px solid var(--card-border);
+            overflow: hidden; /* Corta a onda que vai no fundo */
+            
+            opacity: 0; transform: translate3d(0, 40px, 0) scale(0.95); pointer-events: none; transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+
+        /* ONDAS NO FUNDO DO CARD */
+        .card::after {
+            content: '';
+            position: absolute;
+            bottom: -5px; left: 0; width: 100%; height: 80px;
+            /* SVG de onda suave em Data URI */
+            background: url('data:image/svg+xml;utf8,<svg viewBox="0 0 1440 320" xmlns="http://www.w3.org/2000/svg"><path fill="%2381d4fa" fill-opacity="0.3" d="M0,160L48,165.3C96,171,192,181,288,165.3C384,149,480,107,576,106.7C672,107,768,149,864,170.7C960,192,1056,192,1152,176C1248,160,1344,128,1392,112L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>') no-repeat bottom;
+            background-size: cover;
+            pointer-events: none;
+            z-index: -1; /* Fica atrás do texto */
+        }
+
+        .card.active { opacity: 1; transform: translate3d(0, 0, 0) scale(1); pointer-events: auto; }
+        .card.exit { opacity: 0; transform: translate3d(0, -40px, 0) scale(1.05); }
+
+        /* DECORADOR OCEÂNICO (Separador) */
+        .ocean-divider {
+            width: 40px; height: 12px;
+            background: url('data:image/svg+xml;utf8,<svg viewBox="0 0 24 24" fill="%23f48fb1" xmlns="http://www.w3.org/2000/svg"><path d="M12 2L14.5 9.5H22L16 14L18.5 21.5L12 17L5.5 21.5L8 14L2 9.5H9.5L12 2Z"/></svg>') center no-repeat;
+            background-size: contain;
+            opacity: 0.8;
+        }
+
+        h1, h2 { font-family: 'Nunito', sans-serif; font-weight: 900; color: var(--text-title); line-height: 1.1; font-size: clamp(2rem, 8vw, 2.6rem); letter-spacing: -1px; text-shadow: 0 2px 4px rgba(255, 255, 255, 0.8); z-index: 2; }
+        
+        /* Ajuste do Título pra não sobrar espaço */
+        h1 span { display: block; margin: 5px 0; }
+
+        p { font-weight: 600; color: var(--text-body); font-size: clamp(1.05rem, 4.2vw, 1.2rem); line-height: 1.5; z-index: 2; }
+        
+        .highlight { color: #ffffff; font-weight: 800; background: var(--accent-pink); padding: 4px 18px; border-radius: 16px; display: inline-block; margin-top: 5px; font-size: 1.3rem; box-shadow: 0 4px 15px rgba(244, 143, 177, 0.4); }
+
+        .btn { background: var(--btn-color); color: #fff; border: none; padding: 18px 32px; width: 100%; max-width: 250px; border-radius: 100px; font-family: 'Nunito', sans-serif; font-weight: 900; font-size: 1.1rem; text-transform: uppercase; letter-spacing: 1px; box-shadow: 0 8px 25px rgba(244, 143, 177, 0.5); transition: transform 0.2s, background 0.2s; margin-top: 10px; z-index: 2; }
+        .btn:active { transform: scale(0.95); background: var(--btn-active); }
+
+        /* =========================================
+           ✨ DESTAQUE CARD 1: PÉROLA BRILHANTE
+           ========================================= */
+        .highlight-pearl {
+            color: var(--accent-pink);
+            display: inline-block;
+            /* Animação que faz a palavra brilhar e crescer de leve */
+            animation: pearlShine 2s ease-in-out infinite alternate;
+        }
+
+        /* O texto forte (negrito) dentro do parágrafo ganha um destaque azul escuro */
+        .card p strong {
+            color: var(--accent-pink);
+            font-weight: 800;
+        }
+
+        @keyframes pearlShine {
+            0% { 
+                text-shadow: 0 0 5px rgba(244, 143, 177, 0.4); 
+                transform: scale(1); 
+            }
+            100% { 
+                text-shadow: 0 0 15px rgba(244, 143, 177, 0.8), 0 0 25px rgba(255, 255, 255, 0.8); 
+                transform: scale(1.05) rotate(-2deg); 
+            }
+        }
+
+/* =========================================
+           ✨ DESTAQUE CARD 3: DATA GIGANTE
+           ========================================= */
+        /* O bloquinho de calendário de vidro */
+        .date-display {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.5) 100%);
+            border: 2px solid rgba(255, 255, 255, 0.9);
+            border-radius: 28px;
+            padding: 10px 45px 25px 45px;
+            margin: 15px 0 20px 0;
+            /* Sombra suave de vidro e reflexo interno */
+            box-shadow: 
+                0 15px 30px rgba(2, 132, 199, 0.15),
+                inset 0 4px 15px rgba(255, 255, 255, 1),
+                inset 0 -4px 10px rgba(129, 212, 250, 0.2);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            /* Reutilizamos a animação do relógio pra ele ficar flutuando */
+            animation: floatTime 3.5s ease-in-out infinite alternate;
+            transform: rotate(3deg); /* Leve inclinação pra ficar despojado */
+        }
+
+        /* O número 27 gigantesco em rosa pastel */
+        .date-day {
+            font-family: 'Fredoka', sans-serif;
+            font-size: clamp(4rem, 16vw, 5.5rem); /* Absurdamente grande e lindo */
+            font-weight: 900;
+            line-height: 1.1;
+            color: var(--accent-pink);
+            /* Contorno de adesivo */
+            text-shadow: 
+                4px 4px 0 #fff, -2px -2px 0 #fff, 
+                2px -2px 0 #fff, -2px 2px 0 #fff, 
+                2px 2px 0 #fff, 0 8px 20px rgba(244, 143, 177, 0.4);
+        }
+
+        /* O mês "DE ABRIL" como uma fita azul */
+        .date-month {
+            font-family: 'Nunito', sans-serif;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            font-weight: 900;
+            color: #ffffff;
+            background: var(--bg-deep); /* Azul mais escurinho da paleta */
+            padding: 6px 20px;
+            border-radius: 14px;
+            margin-top: -5px; /* Sobe um pouquinho pra encavalar no número */
+            box-shadow: 0 6px 15px rgba(2, 132, 199, 0.3);
+            border: 2px solid #fff;
+        }
+
+        /* =========================================
+           ✨ DESTAQUE CARD 4: HORÁRIO GIGANTE
+           ========================================= */
+        .time-text {
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            line-height: 1.4;
+        }
+
+        /* O Relógio em formato de Bolha de Vidro */
+        .time-display {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.8) 0%, rgba(255, 255, 255, 0.3) 100%);
+            border: 2px solid rgba(255, 255, 255, 0.9);
+            border-radius: 30px;
+            padding: 20px 40px;
+            margin-bottom: 25px;
+            /* Sombra suave e brilho de reflexo interno */
+            box-shadow: 
+                0 12px 25px rgba(2, 132, 199, 0.1),
+                inset 0 4px 10px rgba(255, 255, 255, 1),
+                inset 0 -4px 10px rgba(129, 212, 250, 0.2);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            /* Animação que faz a bolha flutuar */
+            animation: floatTime 3s ease-in-out infinite alternate;
+        }
+
+        /* O Número Gigante e Rosado */
+        .time-number {
+            font-family: 'Fredoka', sans-serif;
+            font-size: clamp(3.5rem, 12vw, 4.5rem); /* Fica GIGANTE! */
+            font-weight: 900;
+            line-height: 1;
+            color: var(--accent-pink);
+            /* Aquele efeito sticker de adesivo para combinar com o nome da Ágatha */
+            text-shadow: 
+                3px 3px 0 #fff, -2px -2px 0 #fff, 
+                2px -2px 0 #fff, -2px 2px 0 #fff, 
+                2px 2px 0 #fff, 0 8px 15px rgba(244, 143, 177, 0.4);
+        }
+
+        /* A palavrinha "HORAS" embaixo */
+        .time-label {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            font-weight: 900;
+            color: var(--text-title);
+            margin-top: 5px;
+            opacity: 0.8;
+        }
+
+        @keyframes floatTime {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-10px); }
+        }
+
+/* =========================================
+           ✨ DESTAQUE CARD 5: MAPS E ENDEREÇO
+           ========================================= */
+        .address-text {
+            font-size: 1.05rem;
+            color: var(--text-body);
+            line-height: 1.3;
+        }
+
+        /* Botão Secundário Elegante (Google Maps) */
+        .btn-maps {
+            background: #ffffff;
+            color: var(--text-title); /* Azul marinho da paleta */
+            border: 2px solid var(--bg-deep); /* Azul claro da água */
+            padding: 14px 24px;
+            border-radius: 100px;
+            font-family: 'Nunito', sans-serif;
+            font-weight: 900;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            /* Sombrinha fofa e macia */
+            box-shadow: 0 8px 20px rgba(2, 132, 199, 0.12);
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            width: 100%;
+            max-width: 260px;
+            margin: 0 auto; /* Garante que fique centralizado */
+        }
+        
+        .btn-maps svg {
+            color: var(--bg-deep); /* Pinta o ícone do pino de mapa */
+            transition: transform 0.3s ease;
+        }
+
+        /* Interação de clique mega satisfatória (efeito mola) */
+        .btn-maps:active {
+            transform: translateY(3px) scale(0.96);
+            box-shadow: 0 2px 5px rgba(2, 132, 199, 0.1);
+            background: #f0f9ff; /* Leve azulzinho no fundo ao clicar */
+        }
+
+        .btn-maps:active svg {
+            transform: scale(0.85); /* Ícone dá um pulinho pra trás */
+        }
+
+        /* =========================================
+           ✨ DESTAQUE CARD 6: FORMULÁRIO DE PRESENÇA
+           ========================================= */
+        .rsvp-text {
+            font-size: 1.05rem;
+            margin-bottom: 20px;
+            line-height: 1.3;
+        }
+
+        .rsvp-form {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        /* Inputs de Vidro (Glassmorphism) */
+        .glass-input {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.5);
+            border: 2px solid rgba(255, 255, 255, 0.8);
+            border-radius: 16px;
+            padding: 14px 20px;
+            font-family: 'Nunito', sans-serif;
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--text-title);
+            outline: none;
+            box-shadow: inset 0 2px 5px rgba(2, 132, 199, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .glass-input::placeholder {
+            color: var(--text-body);
+            opacity: 0.6;
+        }
+
+        /* Efeito de foco quando o usuário vai digitar */
+        .glass-input:focus {
+            background: rgba(255, 255, 255, 0.9);
+            border-color: var(--accent-pink);
+            box-shadow: 0 0 15px rgba(244, 143, 177, 0.3), inset 0 2px 5px rgba(2, 132, 199, 0.05);
+            transform: scale(1.02);
+        }
+
+        /* Campo de número menorzinho */
+        .guest-count {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(255, 255, 255, 0.3);
+            padding: 10px 15px;
+            border-radius: 16px;
+            border: 1px dashed rgba(255, 255, 255, 0.8);
+        }
+
+        .guest-count label {
+            font-family: 'Fredoka', sans-serif;
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: var(--text-body);
+            text-align: left;
+            line-height: 1.2;
+        }
+
+        .glass-input.short {
+            width: 70px;
+            text-align: center;
+            padding: 10px;
+        }
+
+        /* Tela de Sucesso */
+        .rsvp-success {
+            animation: popIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+        }
+
+        .success-icon {
+            font-size: 3rem;
+            margin-bottom: 10px;
+        }
+
+        .rsvp-success h3 {
+            color: var(--accent-pink);
+            font-family: 'Fredoka', sans-serif;
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+        }
+
+        @keyframes popIn {
+            0% { transform: scale(0.8); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        /* --- ESTILOS DOS MODAIS --- */
+        .modal-overlay {
+            position: fixed; inset: 0; background: rgba(30, 58, 138, 0.4);
+            backdrop-filter: blur(8px); z-index: 10000;
+            display: none; align-items: center; justify-content: center;
+        }
+        .modal-content {
+            background: #fff; width: 90%; max-width: 320px;
+            padding: 30px; border-radius: 30px; text-align: center;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+            animation: popIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .calendar-options { display: flex; flex-direction: column; gap: 10px; margin: 20px 0; }
+        .cal-opt {
+            padding: 15px; border-radius: 15px; background: #f0f9ff;
+            text-decoration: none; color: var(--text-title); font-weight: 800;
+            border: 1px solid #bae6fd;
+        }
+        .modal-close { background: none; border: none; color: var(--accent-pink); font-weight: 900; margin-top: 15px; cursor: pointer; }
+        @keyframes popIn { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+        .ocean-divider {
+    width: 50px;
+    height: 4px;
+    background: var(--accent-pink);
+    border-radius: 10px;
+    margin: 5px auto 15px;
+}
+
+#card-6 strong {
+    font-family: 'Nunito', sans-serif;
+    display: block;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Container Principal - Estilo "Massinha" */
+.hero-badge-infantil {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 60px 0;
+    margin-bottom: 40px;
+    filter: drop-shadow(0 10px 20px rgba(0,0,0,0.1));
+}
+
+/* Raios de Sol Coloridos */
+.badge-rays-colorful {
+    position: absolute;
+    width: 320px;
+    height: 320px;
+    background: repeating-conic-gradient(
+        from 0deg,
+        rgba(129, 212, 250, 0.4) 0deg 15deg,
+        rgba(244, 143, 177, 0.3) 15deg 30deg,
+        transparent 30deg 45deg
+    );
+    border-radius: 50%;
+    animation: rotateRays 30s linear infinite;
+}
+
+/* O Selo "Bolha" (Formato Orgânico) */
+.hero-title-bubble {
+    position: relative;
+    z-index: 2;
+    background: #fff;
+    width: 240px;
+    height: 240px;
+    /* Borda irregular para parecer desenhado a mão */
+    border-radius: 60% 40% 70% 30% / 40% 50% 60% 70%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: 10px solid #fff;
+    outline: 8px solid var(--bg-deep);
+    box-shadow: inset 0 0 20px rgba(129, 212, 250, 0.5);
+    animation: blobMorph 6s ease-in-out infinite alternate;
+}
+
+/* Fontes Beeem Infantis */
+.title-small-fofo {
+    font-family: 'Bubblegum Sans', cursive;
+    font-size: 1.2rem;
+    color: var(--text-title);
+    margin-bottom: -10px;
+}
+
+.big-number {
+    font-family: 'Bubblegum Sans', cursive;
+    font-size: 8rem;
+    line-height: 1;
+    color: var(--accent-pink);
+    /* Efeito Sticker 3D */
+    filter: drop-shadow(5px 5px 0px #fff) drop-shadow(8px 8px 0px rgba(244,143,177,0.3));
+    -webkit-text-stroke: 3px #fff;
+}
+
+.unit-text {
+    font-family: 'Bubblegum Sans', cursive;
+    font-size: 1.5rem;
+    color: var(--text-title);
+    margin-top: -15px;
+    letter-spacing: 1px;
+}
+
+/* Faixa do Nome (Estilo Adesivo de Vinil) */
+.name-sticker {
+    position: absolute;
+    bottom: -25px;
+    background: #FFEB3B; /* Amarelo Vibrante do Submarino */
+    padding: 10px 35px;
+    border-radius: 20px;
+    border: 5px solid #fff;
+    transform: rotate(-5deg);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+    animation: stickerWiggle 4s ease-in-out infinite;
+}
+
+.name-text {
+    font-family: 'Bubblegum Sans', cursive;
+    font-size: 1.8rem;
+    color: #E65100; /* Laranja forte para leitura */
+    white-space: nowrap;
+}
+
+/* Enfeites Flutuantes */
+.decoration { position: absolute; z-index: 3; font-size: 2rem; }
+.d1 { top: 10%; right: 5%; animation: float 3s infinite; }
+.d2 { top: 20%; left: 0%; animation: float 4s infinite; }
+.d3 { bottom: 10%; right: 10%; animation: float 2.5s infinite; }
+
+/* --- NOVAS ANIMAÇÕES --- */
+@keyframes blobMorph {
+    0% { border-radius: 60% 40% 70% 30% / 40% 50% 60% 70%; transform: scale(1); }
+    100% { border-radius: 40% 60% 30% 70% / 60% 40% 70% 30%; transform: scale(1.05); }
+}
+
+@keyframes stickerWiggle {
+    0%, 100% { transform: rotate(-5deg) scale(1); }
+    50% { transform: rotate(5deg) scale(1.1); }
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0) rotate(0); }
+    50% { transform: translateY(-15px) rotate(15deg); }
+}
+    </style>
+</head>
+<body>
+
+<div class="sub-trajectory">
+    <div class="sub-floater">
+        <svg viewBox="0 0 200 120" xmlns="http://www.w3.org/2000/svg" class="sub-svg">
+            <g class="propeller">
+                <rect x="25" y="45" width="10" height="30" rx="5" fill="#FFA000"/>
+            </g>
+            <rect width="130" height="70" x="40" y="30" rx="35" fill="#FFEB3B" stroke="#FBC02D" stroke-width="2"/>
+            <path d="M100,30 L100,10 L120,10" stroke="#FBC02D" stroke-width="8" stroke-linecap="round" fill="none"/>
+            <circle cx="135" cy="65" r="18" fill="#81D4FA" stroke="#4FC3F7" stroke-width="3"/>
+            <circle cx="95" cy="65" r="18" fill="#81D4FA" stroke="#4FC3F7" stroke-width="3"/>
+            <path d="M135,55 Q145,55 145,65" stroke="white" stroke-width="2" fill="none" opacity="0.6"/>
+            <path d="M95,55 Q105,55 105,65" stroke="white" stroke-width="2" fill="none" opacity="0.6"/>
+        </svg>
+    </div>
+</div>
+
+    <div class="bubbles-container" id="bubbles"></div>
+    <div class="fish-container" id="fish"></div>
+
+    <main class="card-wrapper" id="main-content">
+        
+<div class="card active" id="card-0">
+<div class="hero-badge-infantil">
+    <div class="badge-rays-colorful"></div>
+    
+    <h1 class="hero-title-bubble">
+        <span class="title-small-fofo">Mergulhe nos</span>
+        <div class="main-seal-bubble">
+            <span class="big-number">2</span>
+            <span class="unit-text">Aninhos</span>
+        </div>
+        <br><div class="name-sticker">
+            <span class="name-text">da Ágatha!</span>
+        </div>
+    </h1>
+    
+    <div class="decoration d1">⭐</div>
+    <div class="decoration d2">🎈</div>
+    <div class="decoration d3">🐚</div>
+</div>
+            <p>O fundo do mar está em festa e você é nosso convidado especial.</p>
+            <button class="btn" onclick="nextCard(0)">Vamos lá!</button>
+        </div>
+        
+<div class="card" id="card-1">
+            <h2>Nossa <span class="highlight-pearl">Pérola</span> 🐚</h2>
+            <div class="ocean-divider"></div>
+            <p>A conchinha se abriu para celebrar o nosso tesouro mais lindo: os <strong>2 aninhos</strong> da Ágatha! Venha fazer parte desse cardume e festejar com muita magia.</p>
+            <button class="btn" onclick="nextCard(1)">Mergulhar na diversão!</button>
+        </div>
+        
+<div class="card" id="card-2">
+            <h2>Mergulho Noturno ✨</h2>
+            <div class="ocean-divider"></div>
+            <p>Uma <strong>noite mágica</strong> iluminada pelas estrelas do mar, com muitos docinhos, brincadeiras e encantos aquáticos!</p>
+            <button class="btn" onclick="nextCard(2)">Descobrir Quando</button>
+        </div>
+        
+<div class="card" id="card-3">
+            <h2>Marque na Agenda 🗓️</h2>
+            <div class="ocean-divider"></div>
+            
+            <p class="agenda-text">
+                O nosso mergulho oficial está marcado para o dia:
+            </p>
+            
+            <div class="date-display">
+                <span class="date-day">27</span>
+                <span class="date-month">De Abril</span>
+            </div>
+            
+            <p style="font-weight: 700; color: var(--text-body); opacity: 0.8; margin-bottom: 25px;">
+                Já anota aí para não ficar de fora dessa maré de diversão!
+            </p>
+
+            <button class="btn" onclick="nextCard(3)">Ver Horário</button>
+        </div>
+        
+<div class="card" id="card-4">
+            <h2>Hora do Mergulho 🌙</h2>
+            <div class="ocean-divider"></div>
+            
+            <p class="time-text">
+                Quando a lua refletir no mar, estaremos esperando nosso cardume a partir das:
+            </p>
+            
+            <div class="time-display">
+                <span class="time-number">19:00</span>
+                <span class="time-label">Horas</span>
+            </div>
+
+            <button class="btn" onclick="nextCard(4)">Onde é?</button>
+        </div>
+        
+<div class="card" id="card-5">
+            <h2>Nosso Recife 🪸</h2>
+            <div class="ocean-divider"></div>
+            
+            <p class="address-text">
+                O mergulho vai acontecer aqui:<br>
+                <span class="highlight" style="font-size: 0.95rem; line-height: 1.4; padding: 12px 15px; margin: 15px 0 25px 0; display: block;">
+                    Brink Mais Candeias<br>
+                    <small style="font-weight: 600; font-size: 0.8rem; opacity: 0.9;">R. Profa. Eneida Rabelo, 60 - Candeias<br>Jaboatão dos Guararapes - PE</small>
+                </span>
+            </p>
+
+            <a href="https://share.google/3HWHPOCPKkMyjy2qJ" target="_blank" class="btn-maps" style="margin-bottom: 25px;">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                Abrir no Mapa
+            </a>
+
+            <button class="btn" onclick="nextCard(5)">Avançar</button>
+        </div>
+
+<div class="card" id="card-6">
+    <h2 style="font-family: 'Nunito', sans-serif; font-weight: 900;">Presentes 🎁</h2>
+    <div class="ocean-divider"></div>    
+    <div style="display: flex; flex-direction: column; gap: 12px; width: 100%;">
+        <div class="glass-item">
+            <span style="font-size: 1.4rem;">👕</span> 
+            <div>
+                <strong style="display: block; font-size: 0.7rem; text-transform: uppercase; color: var(--text-title); opacity: 0.7;">Roupinha</strong>
+                <span style="font-size: 1.1rem; font-weight: 700; color: var(--text-title);">Tamanho 3 Anos</span>
+            </div>
+        </div>
+
+        <div class="glass-item">
+            <span style="font-size: 1.4rem;">👟</span> 
+            <div>
+                <strong style="display: block; font-size: 0.7rem; text-transform: uppercase; color: var(--text-title); opacity: 0.7;">Calçado</strong>
+                <span style="font-size: 1.1rem; font-weight: 700; color: var(--text-title);">Número 25</span>
+            </div>
+        </div>
+
+        <div class="glass-item">
+            <span style="font-size: 1.4rem;">🧸</span> 
+            <div>
+                <strong style="display: block; font-size: 0.7rem; text-transform: uppercase; color: var(--text-title); opacity: 0.7;">Brinquedos</strong>
+                <span style="font-size: 0.95rem; font-weight: 700; color: var(--text-title); line-height: 1.2; display: block;">Sinta-se à vontade para escolher!</span>
+            </div>
+        </div>
+    </div>
+
+    <div style="margin-top: 20px; padding: 10px;">
+        <p style="font-size: 0.85rem; color: var(--text-body); line-height: 1.4;">
+            "O mais importante é o seu carinho. Fique super à vontade para escolher o que seu coração mandar!"
+        </p>
+    </div>
+    
+    <button class="btn" onclick="nextCard(6)" style="margin-top: 10px;">Confirmar Presença</button>
+</div>
+        
+<div class="card" id="card-7">
+    <h2>Espero Vocês! 🫧</h2>
+    <div class="ocean-divider"></div>
+    
+    <p id="rsvp-desc">Confirme sua presença abaixo e salve a data no seu celular!</p>
+
+    <form id="rsvp-form" onsubmit="window.submitRSVP(event)">
+        <input type="text" id="parentName" placeholder="Nome dos Pais" required class="glass-input">
+        <div class="guest-count">
+            <label>Filhos:</label>
+            <input type="number" id="kidsCount" min="0" value="1" class="glass-input" style="width: 60px;">
+        </div>
+        <button type="submit" class="btn" id="btn-submit">Confirmar Presença</button>
+    </form>
+
+<div id="rsvp-success" style="display: none;" class="animate-success">
+    <div style="font-size: 3rem; margin-bottom: 10px; animation: float 3s ease-in-out infinite;">✨✅✨</div>
+    <h3 style="color: var(--accent-pink); margin-bottom: 5px; font-family: 'Nunito', sans-serif; font-weight: 900;">Tudo Pronto!</h3>
+    
+    <p style="color: var(--text-body); font-size: 1rem; margin-bottom: 20px; font-weight: 600; line-height: 1.4;">
+        Sua presença foi confirmada no mergulho da Ágatha! <br>Mal podemos esperar para celebrar com você. 🌊🐚
+    </p>
+    
+    <div style="display: flex; flex-direction: column; gap: 10px; align-items: center;">
+        <button class="btn" onclick="toggleModal('modal-calendar')" style="background: #fff; color: var(--text-title); border: 2px solid var(--accent-pink); box-shadow: none;">
+            🗓️ Salvar na Agenda
+        </button>
+
+        <button onclick="toggleModal('modal-admin')" style="background: none; border: none; color: var(--text-body); font-size: 0.7rem; text-decoration: underline; opacity: 0.4; margin-top: 10px; cursor: pointer;">
+            Área do Organizador
+        </button>
+    </div>
+</div>
+
+    <div style="margin-top: 30px; cursor: pointer; opacity: 0.8; transition: transform 0.3s;" onclick="toggleModal('modal-lumminin')" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+        <p style="font-size: 10px; font-weight: 900; color: var(--text-body); letter-spacing: 2px; margin-bottom: 5px; text-transform: uppercase;">Criado por</p>
+        <img src="https://xguvmnnhiezwvaimnbqx.supabase.co/storage/v1/object/public/public_icons/logo%20oficial.svg" style="height: 30px; width: auto;" alt="Logo Lumminin">
+    </div>
+</div>
+
+<div id="modal-lumminin" class="modal-overlay" style="background: rgba(30, 58, 138, 0.5); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);">
+    <div class="modal-content" style="max-width: 380px; padding: 40px 30px; border-radius: 40px; background: rgba(255, 255, 255, 0.95); border: 2px solid #fff; box-shadow: 0 25px 50px -12px rgba(2, 132, 199, 0.4); position: relative; overflow: hidden;">
+        
+        <div style="position: absolute; top: -50px; right: -50px; width: 150px; height: 150px; background: radial-gradient(circle, rgba(129, 212, 250, 0.3) 0%, transparent 70%); z-index: 0;"></div>
+
+        <div style="position: relative; z-index: 1;">
+            <div style="margin-bottom: 25px; display: inline-block; position: relative;">
+                <div style="position: absolute; inset: 0; background: var(--bg-deep); filter: blur(20px); opacity: 0.4; border-radius: 50%;"></div>
+                <img 
+                    src="https://xguvmnnhiezwvaimnbqx.supabase.co/storage/v1/object/public/public_icons/logo%20oficial.svg" 
+                    style="height: 40px; width: auto; position: relative;"
+                    alt="Lumminin Logo"
+                >
+            </div>
+
+            <h3 style="color: var(--text-title); font-family: 'Nunito', sans-serif; font-size: 1.6rem; font-weight: 900; margin-bottom: 15px; line-height: 1.2;">
+                O seu evento com o DNA da <span style="color: var(--accent-pink);">Lumminin</span>
+            </h3>
+
+            <p style="font-size: 1rem; line-height: 1.6; color: var(--text-body); margin-bottom: 25px; font-weight: 500;">
+                Gostou desta experiência? Nós criamos <span style="color: var(--accent-pink); font-weight: 700;">soluções digitais únicas</span> para transformar momentos em memórias inesquecíveis.
+            </p>
+            
+            <div style="display: flex; flex-direction: column; gap: 14px;">
+                <a href="https://lumminin.com.br" target="_blank" class="btn" style="text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 10px; background: var(--text-title); padding: 16px; font-size: 1rem; transition: all 0.3s ease; box-shadow: 0 10px 20px rgba(30, 58, 138, 0.2);">
+                    <span>🌐</span> Conhecer nosso Studio
+                </a>
+                
+                <a href="https://wa.me/5581983869030?text=Ol%C3%A1%21+Vim+pelo+convite+da+Festa+do+Fundo+do+Mar+da+%C3%81gatha+e+queria+saber+mais+sobre+a+Lumminin." 
+                   target="_blank" class="btn" style="text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 10px; background: #25d366; padding: 16px; font-size: 1rem; box-shadow: 0 10px 20px rgba(37, 211, 102, 0.2);">
+                    <span>💬</span> Chamar no WhatsApp
+                </a>
+            </div>
+            
+            <button class="modal-close" onclick="toggleModal('modal-lumminin')" style="margin-top: 25px; font-size: 0.9rem; color: #94a3b8; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; transition: color 0.3s;">
+                Voltar ao Convite
+            </button>
+        </div>
+    </div>
+</div>
+
+    <div id="modal-calendar" class="modal-overlay">
+        <div class="modal-content">
+            <h3>Escolha sua Agenda</h3>
+            <p>Selecione onde deseja salvar o lembrete:</p>
+            <div class="calendar-options">
+                <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=2+Aninhos+da+%C3%81gatha+%F0%9F%90%9A&dates=20260427T220000Z/20260428T020000Z&details=Festa+no+fundo+do+mar!&location=R.+Profa.+Eneida+Rabelo,+60+-+Candeias" target="_blank" class="cal-opt">Google Calendar</a>
+                <a href="data:text/calendar;charset=utf8,BEGIN:VCALENDAR%0AVERSION:2.0%0ABEGIN:VEVENT%0ADTSTART:20260427T220000Z%0ADTEND:20260428T020000Z%0ASUMMARY:2%20Aninhos%20da%20%C3%81gatha%20%F0%9F%90%9A%0ALOCATION:R.%20Profa.%20Eneida%20Rabelo%2C%2060%0AEND:VEVENT%0AEND:VCALENDAR" download="Agatha.ics" class="cal-opt">Apple / Outlook</a>
+            </div>
+            <button class="modal-close" onclick="toggleModal('modal-calendar')">Fechar</button>
+        </div>
+    </div>
+
+<div id="modal-admin" class="modal-overlay">
+        <div class="modal-content">
+            <h3>Área do Organizador 🦀</h3>
+            <input type="password" id="adminPass" placeholder="Senha do(a) Organizador(a)" class="glass-input" style="margin-bottom: 10px;">
+            <div style="display: flex; flex-direction: column; gap: 10px;">
+                <button class="btn" onclick="generatePDF()" style="background: #1e3a8a;">📄 Baixar PDF Premium</button>
+                <button onclick="downloadList()" style="background: none; border: none; color: #64748b; font-size: 0.8rem; cursor: pointer;">Baixar apenas CSV (.csv)</button>
+            </div>
+            <button class="modal-close" onclick="toggleModal('modal-admin')">Fechar</button>
+        </div>
+    </div>
+        
+
+<div id="pdf-container-hidden" style="position: absolute; left: -9999px; top: 0; background: white;">
+<div id="pdf-template" style="width: 794px; padding: 60px; background: white; font-family: 'Fredoka', sans-serif; color: #334155; box-sizing: border-box;">
+    
+    <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 5px solid #f48fb1; padding-bottom: 25px; margin-bottom: 40px;">
+        <div style="text-align: left;">
+            <h1 style="color: #1e3a8a; font-size: 32px; margin: 0; font-family: 'Nunito', sans-serif; font-weight: 900;">Lista VIP: Ágatha</h1>
+            <p style="color: #81d4fa; font-weight: 900; text-transform: uppercase; letter-spacing: 2px; font-size: 13px; margin: 0;">Mergulho de 2 Aninhos 🐚</p>
+        </div>
+        <div style="text-align: right;">
+            <img src="https://xguvmnnhiezwvaimnbqx.supabase.co/storage/v1/object/public/public_icons/logo%20oficial.svg" crossorigin="anonymous" style="height: 45px; width: auto;">
+        </div>
+    </div>
+    
+    <table style="width: 100%; border-collapse: collapse; background: white; table-layout: fixed;">
+        <thead>
+            <tr style="background: #f8fafc; color: #1e3a8a;">
+                <th style="padding: 18px; border: 1px solid #e2e8f0; text-align: left; font-size: 16px; width: 60%;">Responsável</th>
+                <th style="padding: 18px; border: 1px solid #e2e8f0; text-align: center; font-size: 16px; width: 20%;">Peixinhos</th>
+                <th style="padding: 18px; border: 1px solid #e2e8f0; text-align: right; font-size: 16px; width: 20%;">Data</th>
+            </tr>
+        </thead>
+        <tbody id="pdf-table-body">
+            </tbody>
+    </table>
+
+    <div style="margin-top: 40px; background: #f1f5f9; padding: 25px; border-radius: 20px; display: flex; justify-content: space-between; align-items: center; page-break-inside: avoid;">
+        <div>
+            <p style="font-size: 12px; color: #64748b; text-transform: uppercase; font-weight: 900; margin-bottom: 5px;">Contagem de Cardume</p>
+            <p style="font-size: 20px; font-weight: 900; color: #1e3a8a; margin: 0;" id="pdf-total-guests"></p>
+        </div>
+        <div style="text-align: right;">
+            <p style="font-size: 13px; color: #f48fb1; font-weight: 900; margin: 0;">CRIADO PELA LUMMININ</p>
+            <p style="font-size: 10px; color: #cbd5e1; text-transform: uppercase; font-weight: 900; margin-top: 5px;">
+                Gerado em: <span id="pdf-gen-date"></span>
+            </p>
+        </div>
+    </div>
+</div>
+</div>
+    </div>
+    </main>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+    // ==========================================
+    // 🌊 TRANSIÇÃO DOS CARDS
+    // ==========================================
+    window.nextCard = function(n) {
+        const cur = document.getElementById('card-' + n);
+        const nxt = document.getElementById('card-' + (n + 1));
+        
+        if (cur && nxt) {
+            cur.classList.remove('active');
+            cur.classList.add('exit');
+            
+            setTimeout(() => {
+                cur.style.display = 'none';
+                nxt.style.display = 'flex';
+                // Pequeno delay para o navegador processar o flex antes da animação
+                setTimeout(() => {
+                    nxt.classList.add('active');
+                }, 50);
+            }, 300);
+        }
+    };
+
+    // ==========================================
+    // ✨ EFEITOS VISUAIS (Bolhas e Peixinhos)
+    // ==========================================
+    const speed = document.getElementById('speed-lines');
+    if (speed) {
+        for(let i=0; i<15; i++) {
+            let l = document.createElement('div'); 
+            l.className = 'speed-line';
+            l.style.left = Math.random() * 100 + 'vw'; 
+            l.style.animationDuration = Math.random() * 0.4 + 0.3 + 's';
+            speed.appendChild(l);
+        }
+    }
+
+    window.addEventListener('load', () => {
+        setTimeout(() => {
+            // Gerador de Bolhas
+            setInterval(() => {
+                const c = document.getElementById('bubbles');
+                if (!c) return;
+                const b = document.createElement('div'); 
+                b.className = 'bubble';
+                b.style.width = b.style.height = Math.random() * 20 + 10 + 'px';
+                b.style.left = Math.random() * 100 + 'vw';
+                b.style.pointerEvents = 'none'; // Crucial para não bloquear o clique!
+                const dur = Math.random() * 5 + 5;
+                b.style.animationDuration = dur + 's';
+                c.appendChild(b); 
+                setTimeout(() => b.remove(), dur * 1000);
+            }, 600);
+
+// Gerador de Peixinhos Premium (Variados e Fofos)
+            setInterval(() => {
+                const c = document.getElementById('fish');
+                if (!c) return;
+                const w = document.createElement('div'); 
+                w.className = 'fish-wrapper';
+                
+                // Variedade de Tamanhos: de 30px até 100px
+                const size = Math.random() * 70 + 30;
+                // Velocidade variada: alguns apressados (4s) outros calmos (12s)
+                const dur = Math.random() * 8 + 4;
+                // Cores pastéis fofas
+                const colors = ['#f48fb1', '#81d4fa', '#ffe082', '#a5d6a7', '#ce93d8'];
+                const color = colors[Math.floor(Math.random() * colors.length)];
+                
+                // Sorteio de qual modelo de peixe vai aparecer (1, 2 ou 3)
+                const type = Math.floor(Math.random() * 3);
+                let fishSVG = '';
+
+                if (type === 0) {
+                    // Peixinho Clássico
+                    fishSVG = `<path d="M90,30 Q70,5 40,30 Q70,55 90,30 M40,30 L10,10 L10,50 Z" fill="${color}"/>`;
+                } else if (type === 1) {
+                    // Peixinho Redondo (tipo Baiacu fofo)
+                    fishSVG = `<path d="M90,30 C90,5 50,5 50,30 C50,55 90,55 90,30 M50,30 L20,10 L20,50 Z" fill="${color}"/>`;
+                } else {
+                    // Peixinho Longo e Elegante
+                    fishSVG = `<path d="M95,30 Q75,15 30,30 Q75,45 95,30 M30,30 L5,20 L5,40 Z" fill="${color}"/>`;
+                }
+
+                w.style.top = Math.random() * 85 + 5 + 'vh';
+                w.style.pointerEvents = 'none';
+                w.style.animationDuration = dur + 's';
+                w.style.opacity = Math.random() * 0.4 + 0.5; // Alguns mais transparentes que outros
+
+                w.innerHTML = `
+                    <div class="fish-wriggle" style="animation-duration: ${Math.random() * 0.4 + 0.4}s">
+                        <svg width="${size}" viewBox="0 0 100 60">
+                            ${fishSVG}
+                            <circle cx="75" cy="25" r="3" fill="white" />
+                            <circle cx="76" cy="25" r="1.5" fill="#333" />
+                        </svg>
+                    </div>`;
+                    
+                c.appendChild(w); 
+                setTimeout(() => w.remove(), dur * 1000);
+            }, 600); // Peixinhos aparecendo um pouco mais rápido
+        }, 6500);
+    });
+
+    // ==========================================
+    // 💾 SUPABASE & RSVP
+    // ==========================================
+    const supabaseUrl = 'https://xguvmnnhiezwvaimnbqx.supabase.co';
+    const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhndXZtbm5oaWV6d3ZhaW1uYnF4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMyNzA3MTUsImV4cCI6MjA4ODg0NjcxNX0.Amjm3xzGfwq8nS93qsK37ZQ5SEiuZoNxjIChk_qa-7w';
+    const sb = window.supabase.createClient(supabaseUrl, supabaseKey);
+
+    window.submitRSVP = async (e) => {
+        e.preventDefault();
+        const btn = document.getElementById('btn-submit');
+        const parentName = document.getElementById('parentName').value;
+        const kidsCount = document.getElementById('kidsCount').value;
+
+        btn.innerHTML = 'Enviando... 🫧'; 
+        btn.disabled = true;
+        
+        try {
+            const { error } = await sb.from('convidados').insert([{ 
+                nome_responsavel: parentName, 
+                quantidade_filhos: parseInt(kidsCount) || 0
+            }]);
+
+            if (error) throw error;
+
+            document.getElementById('rsvp-form').style.display = 'none';
+            document.getElementById('rsvp-desc').style.display = 'none';
+            document.getElementById('rsvp-success').style.display = 'block';
+        } catch (err) {
+            alert('Erro na conexão! Verifique sua internet.');
+            btn.innerHTML = 'Confirmar Presença'; 
+            btn.disabled = false;
+        }
+    };
+
+    // ==========================================
+    // 🔐 ADMIN & MODAIS
+    // ==========================================
+    window.toggleModal = function(id) {
+        const m = document.getElementById(id);
+        if (!m) return;
+        m.style.display = (m.style.display === 'flex') ? 'none' : 'flex';
+    };
+
+window.generatePDF = async function() {
+    const pass = document.getElementById('adminPass').value;
+    if (pass !== 'binho123') { 
+        alert('Senha incorreta! 🦀');
+        return;
+    }
+
+    const btn = document.querySelector('#modal-admin .btn');
+    btn.innerHTML = "Ajustando o Cardume... 🫧";
+    btn.disabled = true;
+
+    try {
+        const { data, error } = await sb.from('convidados').select('*').order('nome_responsavel', { ascending: true });
+        if (error) throw error;
+
+        const tableBody = document.getElementById('pdf-table-body');
+        let totalKids = 0;
+        tableBody.innerHTML = ''; 
+
+        data.forEach(c => {
+            totalKids += (parseInt(c.quantidade_filhos) || 0);
+            tableBody.innerHTML += `
+                <tr style="border-bottom: 1px solid #f1f5f9;">
+                    <td style="padding: 10px 15px; font-weight: 600; color: #1e3a8a; font-size: 13px;">${c.nome_responsavel.toUpperCase()}</td>
+                    <td style="padding: 10px 15px; text-align: center; font-weight: 900; color: #334155;">${c.quantidade_filhos}</td>
+                    <td style="padding: 10px 15px; text-align: right; font-size: 11px; color: #94a3b8;">${new Date(c.created_at).toLocaleDateString('pt-BR')}</td>
+                </tr>
+            `;
+        });
+
+        // Atualiza os dados no template
+        document.getElementById('pdf-total-guests').innerText = `${data.length} Adultos + ${totalKids} Crianças`;
+        document.getElementById('pdf-gen-date').innerText = new Date().toLocaleString('pt-BR');
+
+        await new Promise(resolve => setTimeout(resolve, 800));
+
+        const element = document.getElementById('pdf-template');
+        
+        const opt = {
+            margin: [10, 0], // Margem mínima no topo/fundo da folha
+            filename: 'LISTA_VIP_LUMMININ.pdf',
+            image: { type: 'jpeg', quality: 1 },
+            html2canvas: { scale: 3, useCORS: true, backgroundColor: '#ffffff' },
+            jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+            // MODO DE QUEBRA MAIS PERMISSIVO:
+            pagebreak: { mode: ['css', 'legacy'] } 
+        };
+
+        await html2pdf().set(opt).from(element).save();
+        
+        btn.innerHTML = "📄 Baixar PDF Premium";
+        btn.disabled = false;
+        toggleModal('modal-admin');
+
+    } catch (err) {
+        console.error(err);
+        alert('Erro ao gerar PDF!');
+        btn.innerHTML = "📄 Baixar PDF Premium";
+        btn.disabled = false;
+    }
+};
+</script>
+</body>
+</html>
