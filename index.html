@@ -653,6 +653,40 @@
     0%, 100% { transform: translateY(0) rotate(0); }
     50% { transform: translateY(-15px) rotate(15deg); }
 }
+
+.admin-anchor {
+    position: fixed;
+    bottom: 5px;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    pointer-events: none; /* Evita que o container bloqueie cliques em outros lugares */
+}
+
+.admin-anchor span {
+    pointer-events: auto; /* Deixa o clique ativo apenas no texto */
+    font-size: 0.4rem;
+    color: var(--text-body);
+    opacity: 0.90; /* Quase invisível no celular */
+    cursor: pointer;
+    letter-spacing: 3px;
+    font-weight: 900;
+    transition: opacity 0.5s ease;
+    font-family: 'Nunito', sans-serif;
+    text-transform: uppercase;
+}
+
+/* Quando você passar o mouse (ou clicar por erro) ele ganha um pouco de vida */
+.admin-anchor span:hover {
+    opacity: 0.3;
+}
+
+/* Ajuste para não colidir com o teclado no mobile se necessário */
+@media (max-height: 500px) {
+    .admin-anchor { display: none; }
+}
     </style>
 </head>
 <body>
@@ -836,10 +870,6 @@
         <button class="btn" onclick="toggleModal('modal-calendar')" style="background: #fff; color: var(--text-title); border: 2px solid var(--accent-pink); box-shadow: none;">
             🗓️ Salvar na Agenda
         </button>
-
-        <button onclick="toggleModal('modal-admin')" style="background: none; border: none; color: var(--text-body); font-size: 0.7rem; text-decoration: underline; opacity: 0.4; margin-top: 10px; cursor: pointer;">
-            Área do Organizador
-        </button>
     </div>
 </div>
 
@@ -955,6 +985,10 @@
 </div>
 </div>
     </div>
+
+    <br><footer class="admin-anchor">
+    <span onclick="toggleModal('modal-admin')">LUMMININ CORE v2.6 // PE</span>
+</footer>
     </main>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
